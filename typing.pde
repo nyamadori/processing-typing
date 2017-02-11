@@ -1,4 +1,3 @@
-RomanParser parser;
 Game game;
 
 void setup() {
@@ -6,33 +5,19 @@ void setup() {
 
   Problem[] problems = {
     new Problem("東京特許許可局", "とうきょうとっきょきょかきょく"),
-    new Problem("彼はよく柿食う客だ", "かれはよくかきくうきゃくだ")
+    new Problem("彼はよく柿喰う客だ", "かれはよくかきくうきゃくだ")
   };
   
-  parser = new RomanParser(romanTable, problems[0]);
-  game = new Game(problems);
+  RomanTable romanTable = new RomanTable();
+  romanTable.loadFromFile("romantable.txt");
+
+  game = new Game(problems, romanTable);
 }
 
 void draw() {
-  background(255);
-  fill(0);
-  textSize(30);
-  text(parser.currentKanaText(), 100, 80);
-  
-  float acceptedRomanTextWidth = textWidth(parser.acceptedRomanText());
-  fill(200);
-  text(parser.acceptedRomanText(), 100, 130);
-  fill(0);
-  text(parser.remainRomanText(), 100 + acceptedRomanTextWidth, 100);
+  game.draw();
 }
 
 void keyTyped() {
-  if (parser.isFinished()) {
-    
-  }
-  if (parser.input(str(key))) {
-    println("ok");
-  } else {
-    println("ng", "" + str(key));
-  }
+  game.input(str(key));
 }

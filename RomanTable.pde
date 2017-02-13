@@ -66,8 +66,6 @@ public class RomanTable implements Iterable<Roman> {
       String input = row.getString(0);
       String output = row.getString(1);
       String nextInput = row.getString(2);
-            println(input);
-
       this.add(input, output, nextInput);
     }
   }

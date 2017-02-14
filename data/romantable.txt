@@ -61,7 +61,6 @@ syu	しゅ
 sye	しぇ
 syo	しょ
 sha	しゃ
-shi	し
 shu	しゅ
 she	しぇ
 sho	しょ
@@ -204,6 +203,7 @@ ge	げ
 go	ご
 sa	さ
 si	し
+shi	し
 su	す
 se	せ
 so	そ

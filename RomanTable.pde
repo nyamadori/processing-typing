@@ -74,6 +74,6 @@ public class RomanTable implements Iterable<Roman> {
   }
   
   public Iterator<Roman> iterator() {
-    return this.table.iterator();
+    return table.iterator();
   }
 }

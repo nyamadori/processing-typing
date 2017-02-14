@@ -3,19 +3,9 @@ Game game;
 void setup() {
   size(800, 600);
 
-  //Problem[] problems = {
-  //  new Problem("東京特許許可局", "とうきょうとっきょきょかきょく"),
-  //  new Problem("彼はよく柿喰う客だ", "かれはよくかきくうきゃくだ"),
-  //  new Problem("ダチョウ", "だちょう"),
-  //  new Problem("梅干し", "うめぼし"),
-  //  new Problem("正直者", "しょうじきもの"),
-  //  new Problem("農業", "のうぎょう"),
-  //  new Problem("憂鬱", "ゆううつ"),
-  //  new Problem("積み木", "つみき")
-  //};
-  
   ProblemSet problems = new ProblemSet();
   problems.loadFromFile("problems.txt");
+  problems.shuffle();
   
   RomanTable romanTable = new RomanTable();
   romanTable.loadFromFile("romantable.txt");
@@ -153,7 +143,7 @@ class Problem {
 import java.util.AbstractList;
 import java.util.Collections;
 
-public class ProblemSet extends AbstractList<Problem> {
+public class ProblemSet {
   private List<Problem> problems;
   
   public ProblemSet() {
@@ -166,7 +156,7 @@ public class ProblemSet extends AbstractList<Problem> {
     for (String line : lines) {
       String[] fields = line.split("\t");
       
-      add(new Problem(fields[0], fields[1]));
+      problems.add(new Problem(fields[0], fields[1]));
     }
   }
   
@@ -174,12 +164,21 @@ public class ProblemSet extends AbstractList<Problem> {
     return problems.get(index);
   }
   
+  public void set(int index, Problem problem) {
+    this.problems.set(index, problem);
+  }
+  
   public int size() {
     return problems.size();
   }
   
   public void shuffle() {
-    Collections.shuffle(problems);
+    for (int i = size() - 1; i > 0; i--) {
+      int index = (int)random(0, i + 1);
+      Problem a = get(index);
+      problems.set(index, problems.get(i));
+      problems.set(i, a);
+    }
   }
 }
 public class Roman {
@@ -384,7 +383,8 @@ public class RomanTable implements Iterable<Roman> {
       
       String input = fields[0];
       String output = fields[1];
-      String nextInput = fields[2];
+      String nextInput = null;
+      if (fields.length >= 3) nextInput = fields[2];
       this.add(input, output, nextInput);
     }
   }

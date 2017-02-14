@@ -45,7 +45,7 @@ public class RomanParser {
 
   public boolean input(String alphabet) {
     String newPendingRoman = this.pendingRoman.concat(alphabet);
-    List<Roman> matches = match(alphabet, pos);
+    List<Roman> matches = this.match(alphabet, pos);
 
     if (matches.size() == 0) return false;
     Roman match = matches.get(0);

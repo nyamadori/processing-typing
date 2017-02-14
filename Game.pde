@@ -1,18 +1,11 @@
-String[][] usKeyboard = new String[][] {
-  "`~ 1! 2@ 3# 4$ 5% 6^ 7& 8* 9( 0) -_ =+".split(" "),
-  "qQ wW eE rR tT yY uU iI oO pP [{ ]} \\|".split(" "),
-  "aA sS dD fF gG hH jJ kK lL ;: '\"".split(" "),
-  "zZ xX cC vV bB nN mM ,< .> /?".split(" ")
-};
-
 public class Game {
-  private Problem[] problems;
+  private ProblemSet problems;
   private int index;
   private RomanParser parser;
   private PFont displayTextFont, romanTextFont;
   private List<Particle> particles;
 
-  public Game(Problem[] problems, RomanTable romanTable) {
+  public Game(ProblemSet problems, RomanTable romanTable) {
     this.problems = problems;
     this.parser = new RomanParser(romanTable);
     this.index = 0;
@@ -25,7 +18,7 @@ public class Game {
   }
 
   public boolean isFinished() {
-    return this.index >= this.problems.length;
+    return this.index >= this.problems.size();
   }
 
   public void reset() {
@@ -50,12 +43,12 @@ public class Game {
     if (isFinished()) {
       println("Game clear");
     } else {
-      parser.setProblem(problems[index++]);
+      parser.setProblem(problems.get(index++));
     }
   }
 
   public Problem currentProblem() {
-    return this.problems[index];
+    return this.problems.get(index);
   }
 
 

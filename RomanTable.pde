@@ -60,12 +60,15 @@ public class RomanTable implements Iterable<Roman> {
   }
   
   public void loadFromFile(String path) {
-    Table tbl = loadTable(path, "tsv");
+    String[] rows = loadStrings(path);
     
-    for (TableRow row : tbl.rows()) {
-      String input = row.getString(0);
-      String output = row.getString(1);
-      String nextInput = row.getString(2);
+    for (String row : rows) {
+      String[] fields = row.split("\t");
+      
+      String input = fields[0];
+      String output = fields[1];
+      String nextInput = null;
+      if (fields.length >= 3) nextInput = fields[2];
       this.add(input, output, nextInput);
     }
   }

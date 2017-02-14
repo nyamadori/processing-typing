@@ -6,6 +6,6 @@ public class Particle {
   public void setup() {
     fill(fillColor);
     stroke(strokeColor);
-    strokeWeight(strokeWeight);
+    //strokeWeight(strokeWeight);
   }
 }

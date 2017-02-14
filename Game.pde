@@ -4,11 +4,15 @@ public class Game {
   private RomanParser parser;
   private PFont displayTextFont, romanTextFont;
   private List<Particle> particles;
-
+  private boolean doesDrawMissedEffect;
+  private int textOffsetX;
+  private int shakeWidth;
+  
   public Game(ProblemSet problems, RomanTable romanTable) {
     this.problems = problems;
     this.parser = new RomanParser(romanTable);
     this.index = 0;
+    this.textOffsetX = 0;
     next();
 
     displayTextFont = createFont("ヒラギノ明朝 ProN W3", 48);
@@ -31,10 +35,13 @@ public class Game {
     drawParticles();
     drawProblem();
   }
-
+  
   public void input(String alphabet) {
-    parser.input(alphabet);
-    createParticle();
+    if (parser.input(alphabet)) {
+      createParticle();
+    } else {
+      miss();
+    }
 
     if (parser.isFinished()) next();
   }
@@ -65,10 +72,19 @@ public class Game {
   }
 
   protected void drawProblem() {
+    if (doesDrawMissedEffect) {
+      if (shakeWidth >= 0) {
+        shakeWidth--;
+        textOffsetX = frameCount % 2 == 0 ? shakeWidth : -shakeWidth;
+      } else {
+        doesDrawMissedEffect = false;
+      }
+    }
+    
     fill(255);
     textAlign(CENTER, CENTER);
     textFont(displayTextFont);
-    text(parser.problem.displayText, width / 2, height / 2);
+    text(parser.problem.displayText, width / 2 + textOffsetX, height / 2);
 
     textAlign(LEFT, CENTER);
     textFont(romanTextFont);
@@ -80,6 +96,11 @@ public class Game {
     text(parser.acceptedRomanText(), romanTextLeft, height / 2 + 40);
     fill(255);
     text(parser.remainRomanText(), romanTextLeft + acceptedRomanTextWidth, height / 2 + 40);
+  }
+
+  protected void miss() {
+    doesDrawMissedEffect = true;
+    shakeWidth = 12;
   }
 
   protected void createParticle() {

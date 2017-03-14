@@ -10,7 +10,7 @@ void setup() {
   RomanTable romanTable = new RomanTable();
   romanTable.loadFromFile("romantable.txt");
 
-  game = new Game(problems, romanTable);
+  game = new Game(new TitleScene());
 }
 
 void draw() {
@@ -18,5 +18,13 @@ void draw() {
 }
 
 void keyTyped() {
-  game.input(str(key));
+  game.keyTyped();
+}
+
+void keyPressed() {
+  game.keyPressed();
+}
+
+void keyReleased() {
+  game.keyReleased();
 }
